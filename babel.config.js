@@ -1,11 +1,5 @@
 module.exports = api => {
-  let plugins = [
-    ['@babel/proposal-class-properties', { loose: true }],
-    ['@babel/proposal-object-rest-spread', { loose: true }],
-    '@babel/plugin-transform-runtime',
-    // for IE 11 support
-    '@babel/plugin-transform-object-assign',
-  ];
+  let plugins = ['@babel/plugin-transform-runtime'];
   return {
     presets: [
       [
