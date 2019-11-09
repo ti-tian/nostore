@@ -1,6 +1,6 @@
 {
   "name": "nostore",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Global state management based on React Hooks",
   "main": "lib/index.js",
   "repository": "git@github.com:ti-tian/nostore.git",
