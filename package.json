@@ -7,6 +7,7 @@
   "author": "titian",
   "license": "MIT",
   "private": false,
+  "types": "types/index.d.ts",
   "keywords": [
     "react",
     "state management",
@@ -19,12 +20,13 @@
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts,.tsx .",
     "lint-staged": "lint-staged",
-    "clean": "cross-env rimraf lib && cross-env rimraf es",
-    "build": "npm run clean && npm run build:cjs && npm run build:es",
+    "clean": "cross-env rimraf lib && cross-env rimraf es && cross-env rimraf types",
+    "build": "npm run clean && npm run build:cjs && npm run build:es && npm run build:types",
     "build:types:cjs": "cross-env tsc --emitDeclarationOnly -d --outDir lib --skipLibCheck --project ./tsconfig.json",
     "build:types:es": "cross-env tsc --emitDeclarationOnly -d --outDir es --skipLibCheck --project ./tsconfig.json",
-    "build:cjs": "cross-env BABEL_ENV=cjs babel --root-mode upward src -d lib --ignore **/*.test.ts,**/*.test.tsx --extensions \".ts,.tsx\" && npm run build:types:cjs",
-    "build:es": "cross-env BABEL_ENV=es babel --root-mode upward src -d es --ignore **/*.test.ts,**/*.test.tsx --extensions \".ts,.tsx\" && npm run build:types:es"
+    "build:cjs": "cross-env BABEL_ENV=cjs babel --root-mode upward src -d lib --ignore **/*.test.ts,**/*.test.tsx --extensions \".ts,.tsx\" ",
+    "build:es": "cross-env BABEL_ENV=es babel --root-mode upward src -d es --ignore **/*.test.ts,**/*.test.tsx --extensions \".ts,.tsx\" ",
+    "build:types": "cross-env tsc --emitDeclarationOnly -d --types --outDir types"
   },
   "pre-commit": [
     "lint-staged"
@@ -75,6 +77,7 @@
   },
   "files": [
     "lib",
-    "es"
+    "es",
+    "types"
   ]
 }
