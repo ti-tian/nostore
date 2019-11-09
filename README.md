@@ -21,9 +21,9 @@
 ## Install
 
 ```bash
-$ yarn add notion
+$ yarn add nostore
 # or
-$ npm install notion --save
+$ npm install nostore --save
 ```
 
 ## Try It Online
