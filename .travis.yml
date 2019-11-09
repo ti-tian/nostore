@@ -3,15 +3,8 @@ node_js:
   - '10'
 install:
   - npm install
-  - npm install codecov codacy-coverage -g
 script:
   - npm run lint
-  - npm run test --coverage
+  - npm run test
 after_success:
   - codecov
-  - cat ./coverage/lcov.info | codacy-coverage
-    - 'node_modules'
-notifications:
-  email:
-    on_success: never
-    on_failure: always

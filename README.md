@@ -4,11 +4,11 @@
 
 # Reto
 
-[![codecov](https://img.shields.io/codecov/c/github/nostore/master?logo=codecov)](https://codecov.io/gh/nostore)
+[![codecov](https://img.shields.io/codecov/c/github/ti-tian/nostore/master?logo=codecov)](https://codecov.io/gh/ti-tian/nostore)
 [![npm version](https://img.shields.io/npm/v/nostore.svg?logo=npm)](https://www.npmjs.com/package/nostore)
 [![npm downloads](https://img.shields.io/npm/dw/nostore.svg?logo=npm)](https://www.npmjs.com/package/nostore)
 [![npm bundle size (minified)](https://img.shields.io/bundlephobia/min/nostore.svg?logo=javascript)](https://www.npmjs.com/package/nostore)
-[![Build Status](https://img.shields.io/travis/nostore/master?logo=travis-ci)](https://travis-ci.org/nostore)
+[![Build Status](https://api.travis-ci.org/ti-tian/nostore.svg?branch=master)](https://travis-ci.org/nostore)
 [![codacy](https://img.shields.io/codacy/grade/2d15789ec7b1424092ed472f449a0a70?logo=codacy)](https://app.codacy.com/app/nostore)
 [![Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/nostore?logo=snyk)](https://app.snyk.io/test/github/nostore?targetFile=package.json)
 ![React](https://img.shields.io/npm/dependency-version/nostore/peer/react?logo=react)
