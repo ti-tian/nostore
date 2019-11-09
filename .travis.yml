@@ -1,22 +1,16 @@
 language: node_js
 node_js:
-  - 'lts/*'
-before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.17.3
-  - export PATH="$HOME/.yarn/bin:$PATH"
+  - '10'
 install:
-  - yarn install
-  - yarn global add codecov codacy-coverage
+  - npm install
+  - npm install codecov codacy-coverage -g
 script:
-  - yarn lint
-  - yarn test --coverage
-  - yarn build
+  - npm run lint
+  - npm run test --coverage
+  - npm run build
 after_success:
   - codecov
   - cat ./coverage/lcov.info | codacy-coverage
-cache:
-  yarn: true
-  directories:
     - 'node_modules'
 notifications:
   email:
