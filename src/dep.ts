@@ -9,12 +9,12 @@ export default class Dep {
     this.subs = new Map<string, any[]>();
   }
 
-  setTarget = (target: any) => {
+  setTarget(target: any) {
     this.target = target;
     nextTick(() => {
       this.target = null;
     });
-  };
+  }
 
   clearSub(key: string) {
     this.subs.set(key, []);
