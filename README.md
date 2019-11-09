@@ -4,7 +4,6 @@
 
 # Reto
 
-[![GitHub](https://img.shields.io/github/license/nostore.svg?logo=github)](https://github.com/ti-tian/nostore)
 [![codecov](https://img.shields.io/codecov/c/github/nostore/master?logo=codecov)](https://codecov.io/gh/nostore)
 [![npm version](https://img.shields.io/npm/v/nostore.svg?logo=npm)](https://www.npmjs.com/package/nostore)
 [![npm downloads](https://img.shields.io/npm/dw/nostore.svg?logo=npm)](https://www.npmjs.com/package/nostore)
@@ -18,10 +17,6 @@
 
 - One API, Simple but efficient
 - Strongly typed with Typescript
-
-## Docs
-
-[English](https://reto.js.org/#/) | [中文](https://reto.js.org/#/zh-cn/)
 
 ## Install
 
