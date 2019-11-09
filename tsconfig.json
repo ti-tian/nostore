@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "sourceMap": false,
+    "declaration": true,
+    "noImplicitAny": true,
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "jsx": "react",
+    "lib": ["es6"],
+    "outDir": "lib"
+  },
+  "include": ["src/*"],
+  "exclude": ["tests/*", "node_modules"]
+}

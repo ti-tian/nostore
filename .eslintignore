@@ -1,0 +1,6 @@
+lib
+dist
+es
+node_modules
+build
+package.json
