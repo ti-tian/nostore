@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { renderHook } from '@testing-library/react-hooks';
+import { render, fireEvent } from '@testing-library/react';
 import { act } from 'react-test-renderer';
 import { createStore } from '../src';
-import { nextTick } from '../src/utils';
-
-const wrapper = props => <div>{props.children}</div>;
 
 describe('create-store', () => {
   test('success', () => {
@@ -18,14 +16,6 @@ describe('create-store', () => {
     expect(() => createStore(1)).toThrow();
     expect(() => createStore('a')).toThrow();
   });
-
-  test('no target', () => {
-    const useStore = createStore({ a: 1 });
-    renderHook(() => useStore(), { wrapper });
-    setTimeout(() => {
-      renderHook(() => useStore(), { wrapper });
-    }, 2000);
-  });
 });
 
 describe('store value', () => {
@@ -34,13 +24,6 @@ describe('store value', () => {
     const { result } = renderHook(() => useStore());
     const [store] = result.current;
     expect(store).toEqual({ count: 1, data: [1] });
-  });
-
-  test('not equal', () => {
-    const useStore = createStore({ count: 1, data: [1] });
-    const { result } = renderHook(() => useStore());
-    const [store] = result.current;
-    expect(store).not.toEqual({ count: 2, data: [1] });
   });
 });
 
@@ -172,13 +155,6 @@ describe('multiple components', () => {
     expect(c2.result.current[0].count).toBe(2);
   });
 
-  test('three components', () => {
-    const useStore = createStore({ count: 1, data: [1] });
-    renderHook(() => useStore());
-    renderHook(() => useStore());
-    renderHook(() => useStore());
-  });
-
   test('three components same value', () => {
     const useStore = createStore({ count: 1, data: [1] });
     const c1 = renderHook(() => useStore());
@@ -223,7 +199,7 @@ describe('multiple components', () => {
 });
 
 describe('multiple components use hooks', () => {
-  test('two components', () => {
+  test('two components: with react hooks', () => {
     const useStore = createStore({ count: 1, data: [1] });
 
     function useDecrease() {
@@ -246,16 +222,138 @@ describe('multiple components use hooks', () => {
 
     const { result } = renderHook(() => useDecrease());
     const { result: result2 } = renderHook(() => useIncrease());
-
-    const c = renderHook(() => useStore());
+    const { result: result3 } = renderHook(() => useStore());
 
     act(() => {
       result.current();
       result2.current();
-      c.result.current[0].count;
+      result3.current[0].count;
     });
 
-    expect(c.result.current[0].count).toBe(1);
-    expect(c.result.current[0].count).toBe(1);
+    expect(result3.current[0].count).toBe(1);
+    expect(result3.current[0].count).toBe(1);
+  });
+
+  test('render', () => {
+    const useStore = createStore({ count: 1, data: [1] });
+
+    const useIncrease = () => {
+      const [store, setStore] = useStore();
+      return () => {
+        setStore({
+          count: store.count + 1,
+        });
+      };
+    };
+
+    function Increase() {
+      const [store] = useStore();
+      const increase = useIncrease();
+      return (
+        <div>
+          <h1 data-testid='increase-count'>{store.count}</h1>
+          <button data-testid='increase' onClick={increase}></button>
+        </div>
+      );
+    }
+
+    function Decrease() {
+      const [store, setStore] = useStore();
+      return (
+        <div>
+          <h1 data-testid='decrease-count'>{store.count}</h1>
+          <button
+            onClick={() => {
+              setStore(prevStore => {
+                return {
+                  count: prevStore.count + 1,
+                };
+              });
+            }}
+          ></button>
+        </div>
+      );
+    }
+
+    const Container = () => {
+      return (
+        <div>
+          <Increase></Increase>
+          <Decrease></Decrease>
+        </div>
+      );
+    };
+
+    const { getByTestId } = render(<Container />);
+    fireEvent.click(getByTestId('increase'));
+    expect(getByTestId('decrease-count').innerHTML).toBe('2');
+  });
+
+  test('no target', () => {
+    const useStore = createStore({ count: 1, data: [1] });
+
+    const useIncrease = () => {
+      const [, setStore] = useStore();
+      return () => {
+        setStore(prevStore => {
+          return {
+            count: prevStore.count + 1,
+          };
+        });
+      };
+    };
+
+    const useDecrease = () => {
+      const [, setStore] = useStore();
+      return () => {
+        setStore(prevStore => {
+          return {
+            count: prevStore.count - 1,
+          };
+        });
+      };
+    };
+
+    function Increase() {
+      const [store] = useStore();
+      const increase = useIncrease();
+      return (
+        <div>
+          <h1 data-testid='increase-count'>{store.count}</h1>
+          <div>{store.data}</div>
+          <button data-testid='increase' onClick={increase}></button>
+        </div>
+      );
+    }
+
+    function Decrease() {
+      const [store] = useStore();
+      const decrease = useDecrease();
+
+      useEffect(() => {
+        decrease();
+      }, []);
+
+      return (
+        <div>
+          <h1 data-testid='decrease-count'>{store.count}</h1>
+          <button data-testid='decrease' onClick={decrease}></button>
+        </div>
+      );
+    }
+
+    const Container = () => {
+      return (
+        <div>
+          <Increase></Increase>
+          <Decrease></Decrease>
+        </div>
+      );
+    };
+
+    const { getByTestId } = render(<Container />);
+    // fireEvent.click(getByTestId('decrease'));
+    expect(getByTestId('decrease-count').innerHTML).toBe('0');
+    expect(getByTestId('increase-count').innerHTML).toBe('0');
   });
 });

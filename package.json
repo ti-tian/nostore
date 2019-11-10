@@ -38,9 +38,6 @@
   "devDependencies": {
     "@babel/cli": "^7.7.0",
     "@babel/core": "^7.4.0",
-    "@babel/plugin-proposal-class-properties": "^7.4.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.4.0",
-    "@babel/plugin-transform-object-assign": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "^7.4.1",
     "@babel/preset-react": "^7.0.0",
@@ -65,14 +62,12 @@
     "pre-commit": "^1.2.2",
     "react-test-renderer": "^16.11.0",
     "ts-jest": "^24.1.0",
-    "typescript": "^3.7.2"
-  },
-  "dependencies": {
+    "typescript": "^3.7.2",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },
   "lint-staged": {
-    "**/*.{js,jsx,tsx,ts}": [
+    "src/**/*.{js,jsx,tsx,ts}": [
       "npm run lint"
     ]
   },

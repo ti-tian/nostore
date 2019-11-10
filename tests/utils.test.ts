@@ -36,21 +36,31 @@ describe('isFunction', () => {
   });
 });
 
-test('nextTick', () => {
-  const callback = jest.fn();
+describe('nextTick', () => {
+  it('with callback', () => {
+    const callback = jest.fn();
 
-  nextTick(callback);
+    nextTick(callback);
 
-  nextTick(() => {
-    // At this point in time, the callback should not have been called yet
-    expect(callback).toBeCalled();
+    nextTick(() => {
+      // At this point in time, the callback should not have been called yet
+      expect(callback).toBeCalled();
 
-    // Fast-forward until all timers have been executed
-    jest.useFakeTimers();
+      // Fast-forward until all timers have been executed
+      jest.useFakeTimers();
 
-    // Now our callback should have been called!
-    expect(callback).toBeCalled();
-    expect(callback).toHaveBeenCalledTimes(1);
+      // Now our callback should have been called!
+      expect(callback).toBeCalled();
+      expect(callback).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it('no callback', () => {
+    let i = 0;
+    nextTick().then(() => {
+      expect(i).toBe(1);
+    });
+    i += 1;
   });
 });
 
