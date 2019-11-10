@@ -1,7 +1,7 @@
 # nostore
 
 > Global state management based on React Hooks
-
+[![GitHub](https://img.shields.io/github/license/ti-tian/nostore.svg?logo=github)](https://github.com/ti-tian/nostore)
 [![codecov](https://img.shields.io/codecov/c/github/ti-tian/nostore/master?logo=codecov)](https://codecov.io/gh/ti-tian/nostore)
 [![npm version](https://img.shields.io/npm/v/nostore.svg?logo=npm)](https://www.npmjs.com/package/nostore)
 [![npm downloads](https://img.shields.io/npm/dw/nostore.svg?logo=npm)](https://www.npmjs.com/package/nostore)
