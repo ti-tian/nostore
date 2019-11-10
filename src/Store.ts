@@ -2,7 +2,7 @@ import { isFunction, isPlainObject } from './utils';
 import Dep from './dep';
 import { invariant, assign, getDiffProps } from './utils';
 
-export interface IStore<S> {
+export interface StoreInterface<S> {
   store: S;
   initialStore: any;
   dep: Dep;
@@ -10,7 +10,7 @@ export interface IStore<S> {
   getStore(): S;
 }
 
-export default class Store<S> implements IStore<S> {
+export default class Store<S> implements StoreInterface<S> {
   initialStore: any;
   store: S;
   dep: Dep;

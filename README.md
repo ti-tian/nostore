@@ -5,7 +5,7 @@
 [![codecov](https://img.shields.io/codecov/c/github/ti-tian/nostore/master?logo=codecov)](https://codecov.io/gh/ti-tian/nostore)
 [![npm version](https://img.shields.io/npm/v/nostore.svg?logo=npm)](https://www.npmjs.com/package/nostore)
 [![npm downloads](https://img.shields.io/npm/dw/nostore.svg?logo=npm)](https://www.npmjs.com/package/nostore)
-[![npm bundle size (minified)](https://img.shields.io/bundlephobia/min/nostore.svg?logo=javascript)](https://www.npmjs.com/package/nostore)
+[![npm bundle size (minified)](https://img.shields.io/bundlephobia/min/nostore@latest.svg?logo=javascript)](https://bundlephobia.com/result?p=nostore@latest)
 [![Build Status](https://api.travis-ci.org/ti-tian/nostore.svg?branch=master)](https://travis-ci.org/nostore)
 ![React](https://img.shields.io/npm/dependency-version/nostore/peer/react?logo=react)
 

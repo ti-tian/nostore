@@ -1,11 +1,12 @@
 module.exports = api => {
+  api.cache.forever();
   let plugins = ['@babel/plugin-transform-runtime'];
   return {
     presets: [
       [
         '@babel/preset-env',
         {
-          modules: api.env('es') ? false : 'cjs',
+          modules: false,
           useBuiltIns: false,
         },
       ],

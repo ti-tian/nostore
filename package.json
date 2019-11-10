@@ -1,8 +1,9 @@
 {
   "name": "nostore",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Global state management based on React Hooks",
   "main": "lib/index.js",
+  "module": "es/index.js",
   "repository": "https://github.com/ti-tian/nostore",
   "author": "titian",
   "license": "MIT",
@@ -18,14 +19,11 @@
     "dev": "jest --watchAll",
     "test": "jest",
     "coverage": "jest --coverage",
-    "lint": "eslint --ext .ts,.tsx .",
+    "lint": "eslint --ext src/**/*.{tsx,ts}",
     "lint-staged": "lint-staged",
     "clean": "cross-env rimraf lib && cross-env rimraf es && cross-env rimraf types",
-    "build": "npm run clean && npm run build:cjs && npm run build:es && npm run build:types",
-    "build:types:cjs": "cross-env tsc --emitDeclarationOnly -d --outDir lib --skipLibCheck --project ./tsconfig.json",
-    "build:types:es": "cross-env tsc --emitDeclarationOnly -d --outDir es --skipLibCheck --project ./tsconfig.json",
-    "build:cjs": "cross-env BABEL_ENV=cjs babel --root-mode upward src -d lib --ignore **/*.test.ts,**/*.test.tsx --extensions \".ts,.tsx\" ",
-    "build:es": "cross-env BABEL_ENV=es babel --root-mode upward src -d es --ignore **/*.test.ts,**/*.test.tsx --extensions \".ts,.tsx\" ",
+    "build": "npm run clean && npm run rollup && npm run build:types",
+    "rollup": "rollup -c rollup.config.js",
     "build:types": "cross-env tsc --emitDeclarationOnly -d --types --outDir types"
   },
   "pre-commit": [
@@ -36,7 +34,6 @@
     "react-dom": "^16.8.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.0",
     "@babel/core": "^7.4.0",
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "^7.4.1",
@@ -60,14 +57,17 @@
     "jest": "^24.9.0",
     "lint-staged": "^9.4.2",
     "pre-commit": "^1.2.2",
-    "react-test-renderer": "^16.11.0",
-    "ts-jest": "^24.1.0",
-    "typescript": "^3.7.2",
     "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react-dom": "^16.8.0",
+    "react-test-renderer": "^16.11.0",
+    "rollup": "^1.26.4",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.7.2"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,tsx,ts}": [
+    "src/**/*.{tsx,ts}": [
       "npm run lint"
     ]
   },
