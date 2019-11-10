@@ -1,6 +1,7 @@
 import { isFunction, isPlainObject } from './utils';
 import Dep from './dep';
-import { invariant, assign, getDiffProps } from './utils';
+import { invariant, assign, getDiffProps, nextTick } from './utils';
+import * as ReactDOM from 'react-dom';
 
 export interface StoreInterface<S> {
   store: S;
@@ -40,7 +41,11 @@ export default class Store<S> implements StoreInterface<S> {
           'Store can only be changed by [setStore].',
         );
         this.setStoreCalled = false;
-        this.dep.notify(key);
+        nextTick(() => {
+          ReactDOM.unstable_batchedUpdates(() => {
+            this.dep.notify(key);
+          });
+        });
         return Reflect.set(target, key, value, receiver);
       },
     };
@@ -56,7 +61,7 @@ export default class Store<S> implements StoreInterface<S> {
 
     this.setStoreCalled = true;
 
-    let newStore: S | object;
+    let newStore: S | object = {};
     if (isFunction(partialStore)) {
       newStore = (partialStore as Function)(this.store);
     } else if (isPlainObject(partialStore)) {
