@@ -1,8 +1,8 @@
-[简体中文](./README.zh-cn.md) | English
+[English](./README.md) | 简体中文
 
 # nostore
 
-> Global state management based on React Hooks
+> 基于 React hooks 实现的全局状态管理库
 
 [![GitHub](https://img.shields.io/github/license/ti-tian/nostore.svg?logo=github)](https://github.com/ti-tian/nostore)
 [![codecov](https://img.shields.io/codecov/c/github/ti-tian/nostore/master?logo=codecov)](https://codecov.io/gh/ti-tian/nostore)
@@ -12,12 +12,14 @@
 [![Build Status](https://api.travis-ci.org/ti-tian/nostore.svg?branch=master)](https://travis-ci.org/nostore)
 ![React](https://img.shields.io/npm/dependency-version/nostore/peer/react?logo=react)
 
-## Features
+## 特性
 
-- One API, Simple but efficient
-- Strongly typed with Typescript
-- React hooks style
-- Minimum granularity update component
+- 只有一个 API ，简单高效
+- Typescript 支持
+- React hooks 风格
+- 最小粒度更新组件
+
+> 你可以当成全局状态下的 useState
 
 ## Install
 
@@ -27,17 +29,16 @@ $ yarn add nostore
 $ npm install nostore --save
 ```
 
-## Try It Online
+## 安装
 
 [![Edit react](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/trusting-saha-g6uuy?fontsize=14)
 
-## use
+## 使用方式
 
-### create a store
+### 新建一个 store
 
 ```javascript
 // store.js
-
 import { createStore } from 'nostore';
 
 const useStore = createStore({ count: 1 });
@@ -54,7 +55,7 @@ export function useDecrease() {
 }
 ```
 
-### use store
+### 使用 store
 
 ```javascript
 // Increase.jsx
