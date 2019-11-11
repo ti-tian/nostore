@@ -39,6 +39,7 @@ $ npm install nostore --save
 
 ```javascript
 // store.js
+
 import { createStore } from 'nostore';
 
 const useStore = createStore({ count: 1 });
