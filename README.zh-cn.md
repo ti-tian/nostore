@@ -21,7 +21,7 @@
 
 > 你可以当成全局状态下的 useState
 
-## Install
+## 安装
 
 ```bash
 $ yarn add nostore
@@ -29,7 +29,7 @@ $ yarn add nostore
 $ npm install nostore --save
 ```
 
-## 安装
+## 在线尝试
 
 [![Edit react](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/trusting-saha-g6uuy?fontsize=14)
 
