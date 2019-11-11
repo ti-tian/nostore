@@ -1,7 +1,7 @@
 import { isFunction, isPlainObject } from './utils';
 import Dep from './dep';
 import { invariant, assign, getDiffProps, nextTick } from './utils';
-import * as ReactDOM from 'react-dom';
+import { unstable_batchedUpdates } from 'react-dom';
 
 export interface StoreInterface<S> {
   store: S;
@@ -43,7 +43,7 @@ export default class Store<S> implements StoreInterface<S> {
         );
         this.setStoreCalled = false;
         nextTick(() => {
-          ReactDOM.unstable_batchedUpdates(() => {
+          unstable_batchedUpdates(() => {
             this.dep.notify(key);
           });
         });
