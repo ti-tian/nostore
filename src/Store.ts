@@ -22,6 +22,7 @@ export default class Store<S> implements StoreInterface<S> {
     this.dep = new Dep();
     this.setStoreCalled = false;
     this.setStore = this.setStore.bind(this);
+    this.getStore = this.getStore.bind(this);
     this.reative();
   }
 

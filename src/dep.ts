@@ -1,39 +1,45 @@
-import { nextTick } from './utils';
-
 export default class Dep {
-	target: any;
-	subs: any;
+  target: any;
+  subs: any;
 
-	constructor() {
-		this.subs = new Map<string, any[]>();
-	}
+  constructor() {
+    this.subs = new Map<string, any[]>();
+  }
 
-	setTarget(target: any) {
-		this.target = target;
-	}
+  setTarget(target: any) {
+    this.target = target;
+  }
 
-	removeTarget() {
-		this.target = null;
-	}
+  removeTarget(): void {
+    this.target = null;
+  }
 
-	clearSub(key: string) {
-		this.subs.set(key, []);
-	}
+  targetUnmount(target: any): void {
+    target._NOSTORE_UNMOUNT_ = true;
+  }
 
-	notify(key: string) {
-		const updates = this.subs.get(key) || [];
-		for (const update of updates) {
-			update({});
-		}
-		this.clearSub(key);
-	}
+  targetMount(target: any): void {
+    target._NOSTORE_UNMOUNT_ = false;
+  }
 
-	addSub(key: string): void {
-		if (!this.target) return;
-		const updates = this.subs.get(key) || [];
-		if (updates.indexOf(this.target) === -1) {
-			updates.push(this.target);
-		}
-		this.subs.set(key, updates);
-	}
+  clearSub(key: string) {
+    this.subs.set(key, []);
+  }
+
+  notify(key: string) {
+    const updates = this.subs.get(key) || [];
+    for (const update of updates) {
+      if (!update._NOSTORE_UNMOUNT_) update({});
+    }
+    this.clearSub(key);
+  }
+
+  addSub(key: string): void {
+    if (!this.target) return;
+    const updates = this.subs.get(key) || [];
+    if (updates.indexOf(this.target) === -1) {
+      updates.push(this.target);
+    }
+    this.subs.set(key, updates);
+  }
 }
