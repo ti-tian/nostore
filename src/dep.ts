@@ -1,3 +1,5 @@
+import { nextTick } from './utils';
+
 export default class Dep {
   target: any;
   subs: any;
@@ -8,6 +10,7 @@ export default class Dep {
 
   setTarget(target: any) {
     this.target = target;
+    nextTick(() => this.removeTarget());
   }
 
   removeTarget(): void {

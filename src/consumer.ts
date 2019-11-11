@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { StoreInterface } from './Store';
-import { nextTick } from './utils';
 
 export function useStore<S>(
   store: StoreInterface<S>,
@@ -14,6 +13,5 @@ export function useStore<S>(
     };
   }, [dep]);
   dep.setTarget(updater);
-  nextTick(() => dep.removeTarget());
   return [getStore(), setStore];
 }
