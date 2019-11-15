@@ -38,7 +38,7 @@ $ npm install nostore --save
 ```javascript
 // store.js
 
-import { createStore } from 'nostore';
+import { createStore } from "nostore";
 
 const useStore = createStore({ count: 1 });
 
@@ -48,7 +48,7 @@ export function useDecrease() {
   const [, setStore] = useStore();
   return () => {
     setStore(prevStore => ({
-      count: prevStore.count - 1,
+      count: prevStore.count - 1
     }));
   };
 }
@@ -59,7 +59,7 @@ export function useDecrease() {
 ```javascript
 // Increase.jsx
 
-import useStore from './store.js';
+import useStore from "./store.js";
 
 function Increase() {
   const [store, setStore] = useStore();
@@ -68,9 +68,7 @@ function Increase() {
       <h1>{store.count}</h1>
       <button
         onClick={() => {
-          setStore({
-            count: store.count + 1,
-          });
+          setStore({ count: store.count + 1 });
         }}
       />
     </>
@@ -81,7 +79,7 @@ function Increase() {
 ```javascript
 // Decrease.jsx
 
-import useStore, { useDecrease } from './store.js';
+import useStore, { useDecrease } from "./store.js";
 
 function Decrease() {
   const [store] = useStore();
@@ -94,3 +92,5 @@ function Decrease() {
   );
 }
 ```
+
+
