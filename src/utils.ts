@@ -19,7 +19,7 @@ export function invariant(condition: boolean, message?: string | boolean) {
   if (!condition) throw new Error('[nostore]: ' + message);
 }
 
-export function assign(prev: any, next: any): void {
+export function merge(prev: any, next: any): void {
   Object.assign(prev, next);
 }
 

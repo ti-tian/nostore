@@ -1,7 +1,7 @@
-import { isFunction, isPlainObject } from './utils';
-import Dep from './dep';
-import { invariant, assign, getDiffProps, nextTick } from './utils';
-import { unstable_batchedUpdates } from 'react-dom';
+import { isFunction, isPlainObject } from "./utils";
+import Dep from "./dep";
+import { invariant, merge, getDiffProps, nextTick } from "./utils";
+import { unstable_batchedUpdates } from "react-dom";
 
 export interface StoreInterface<S> {
   store: S;
@@ -9,6 +9,7 @@ export interface StoreInterface<S> {
   dep: Dep;
   setStore(partialStore: ((prevStore: S) => Partial<S>) | Partial<S>): void;
   getStore(): S;
+  reactive(): void;
 }
 
 export default class Store<S> implements StoreInterface<S> {
@@ -23,14 +24,14 @@ export default class Store<S> implements StoreInterface<S> {
     this.setStoreCalled = false;
     this.setStore = this.setStore.bind(this);
     this.getStore = this.getStore.bind(this);
-    this.reative();
+    this.reactive();
   }
 
   getStore(): S {
     return this.store;
   }
 
-  reative() {
+  reactive(): void {
     const handler = {
       get: (target: any, key: string, receiver: any) => {
         this.dep.addSub(key);
@@ -39,7 +40,7 @@ export default class Store<S> implements StoreInterface<S> {
       set: (target: any, key: string, value: any, receiver: any) => {
         invariant(
           this.setStoreCalled,
-          'Store can only be changed by [setStore].',
+          "Store can only be changed by [setStore]."
         );
         this.setStoreCalled = false;
         nextTick(() => {
@@ -48,16 +49,16 @@ export default class Store<S> implements StoreInterface<S> {
           });
         });
         return Reflect.set(target, key, value, receiver);
-      },
+      }
     };
     this.store = new Proxy(this.store, handler);
   }
 
-  setStore(partialStore: ((prevStore: S) => Partial<S>) | Partial<S>) {
+  setStore(partialStore: ((prevStore: S) => Partial<S>) | Partial<S>): void {
     invariant(
       isPlainObject(partialStore) || isFunction(partialStore),
-      'setStore(...): takes an object of store variables to update or a ' +
-        'function which returns an object of store variables.',
+      "setStore(...): takes an object of store variables to update or a " +
+        "function which returns an object of store variables."
     );
 
     this.setStoreCalled = true;
@@ -74,9 +75,9 @@ export default class Store<S> implements StoreInterface<S> {
 
     invariant(
       diffProps.length === 0,
-      `cannot add new props: ${diffProps.join(', ')}`,
+      `cannot add new props: ${diffProps.join(", ")}`
     );
 
-    assign(this.store, newStore);
+    merge(this.store, newStore);
   }
 }

@@ -2,7 +2,7 @@ import {
   isPlainObject,
   isFunction,
   nextTick,
-  assign,
+  merge,
   invariant,
   getDiffProps,
 } from '../src/utils';
@@ -64,16 +64,16 @@ describe('nextTick', () => {
   });
 });
 
-describe('assign', () => {
+describe('merge', () => {
   it('true', () => {
     const obj = { a: '1' };
-    assign(obj, {});
+    merge(obj, {});
 
     const obj2 = { a: '1' };
-    assign(obj2, { b: '2' });
+    merge(obj2, { b: '2' });
 
     const obj3 = { a: [] };
-    assign(obj3, { a: [1] });
+    merge(obj3, { a: [1] });
 
     expect(obj).toEqual({ a: '1' });
     expect(obj2).toEqual({ a: '1', b: '2' });
@@ -82,13 +82,13 @@ describe('assign', () => {
 
   it('false', () => {
     const obj = { a: '1' };
-    assign(obj, {});
+    merge(obj, {});
 
     const obj2 = { a: '1' };
-    assign(obj2, { b: '2' });
+    merge(obj2, { b: '2' });
 
     const obj3 = { a: [] };
-    assign(obj3, { a: [1] });
+    merge(obj3, { a: [1] });
 
     expect(obj).not.toEqual({ a: '2' });
     expect(obj2).not.toEqual({ a: '1' });
