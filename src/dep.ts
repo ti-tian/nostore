@@ -42,13 +42,13 @@ export default class Dep {
   }
 
   notify(): void {
-    for (const key of this.buffer) {
+    this.buffer.forEach((key: string) => {
       const updates = this.subs.get(key) || [];
-      for (const update of updates) {
+      updates.forEach((update: any) => {
         if (!update._NOSTORE_UNMOUNT_) update({});
-      }
+      });
       this.clearSub(key);
-    }
+    });
   }
 
   addSub(key: string): void {
