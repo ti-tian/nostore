@@ -1,14 +1,16 @@
-import { nextTick } from './utils';
+import { nextTick } from "./utils";
 
 export default class Dep {
   target: any;
   subs: any;
+  buffer: string[];
 
   constructor() {
     this.subs = new Map<string, any[]>();
+    this.buffer = [];
   }
 
-  setTarget(target: any) {
+  setTarget(target: any): void {
     this.target = target;
     nextTick(() => this.removeTarget());
   }
@@ -25,16 +27,28 @@ export default class Dep {
     target._NOSTORE_UNMOUNT_ = false;
   }
 
-  clearSub(key: string) {
+  addBuffer(key: string): void {
+    if (this.buffer.indexOf(key) === -1) {
+      this.buffer.push(key);
+    }
+  }
+
+  clearBuffer(): void {
+    this.buffer = [];
+  }
+
+  clearSub(key: string): void {
     this.subs.set(key, []);
   }
 
-  notify(key: string) {
-    const updates = this.subs.get(key) || [];
-    for (const update of updates) {
-      if (!update._NOSTORE_UNMOUNT_) update({});
+  notify(): void {
+    for (const key of this.buffer) {
+      const updates = this.subs.get(key) || [];
+      for (const update of updates) {
+        if (!update._NOSTORE_UNMOUNT_) update({});
+      }
+      this.clearSub(key);
     }
-    this.clearSub(key);
   }
 
   addSub(key: string): void {

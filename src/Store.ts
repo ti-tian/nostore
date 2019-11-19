@@ -42,10 +42,12 @@ export default class Store<S> implements StoreInterface<S> {
           this.setStoreCalled,
           "Store can only be changed by [setStore]."
         );
-        this.setStoreCalled = false;
+        this.dep.addBuffer(key);
         nextTick(() => {
+          this.setStoreCalled = false;
           unstable_batchedUpdates(() => {
-            this.dep.notify(key);
+            this.dep.notify();
+            this.dep.clearBuffer();
           });
         });
         return Reflect.set(target, key, value, receiver);
