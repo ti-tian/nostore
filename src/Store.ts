@@ -16,12 +16,12 @@ export default class Store<S> implements StoreInterface<S> {
   initialStore: any;
   store: S;
   dep: Dep;
-  setStoreCalled: boolean;
+  writable: boolean;
 
   constructor(initialStore: S) {
     this.store = initialStore;
     this.dep = new Dep();
-    this.setStoreCalled = false;
+    this.writable = false;
     this.setStore = this.setStore.bind(this);
     this.getStore = this.getStore.bind(this);
     this.reactive();
@@ -38,13 +38,12 @@ export default class Store<S> implements StoreInterface<S> {
         return Reflect.get(target, key, receiver);
       },
       set: (target: any, key: string, value: any, receiver: any) => {
-        invariant(
-          this.setStoreCalled,
-          "Store can only be changed by [setStore]."
-        );
+        invariant(this.writable, "Store can only be changed by [setStore].");
+
         this.dep.addBuffer(key);
+
         nextTick(() => {
-          this.setStoreCalled = false;
+          this.writable = false;
           unstable_batchedUpdates(() => {
             this.dep.notify();
             this.dep.clearBuffer();
@@ -63,12 +62,12 @@ export default class Store<S> implements StoreInterface<S> {
         "function which returns an object of store variables."
     );
 
-    this.setStoreCalled = true;
+    this.writable = true;
 
-    let newStore: S | object = {};
+    let newStore: S | object;
     if (isFunction(partialStore)) {
       newStore = (partialStore as Function)(this.store);
-    } else if (isPlainObject(partialStore)) {
+    } else {
       newStore = partialStore;
     }
 

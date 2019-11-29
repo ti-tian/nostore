@@ -19,14 +19,6 @@ export default class Dep {
     this.target = null;
   }
 
-  targetUnmount(target: any): void {
-    target._NOSTORE_UNMOUNT_ = true;
-  }
-
-  targetMount(target: any): void {
-    target._NOSTORE_UNMOUNT_ = false;
-  }
-
   addBuffer(key: string): void {
     if (this.buffer.indexOf(key) === -1) {
       this.buffer.push(key);
@@ -43,18 +35,15 @@ export default class Dep {
 
   notify(): void {
     this.buffer.forEach((key: string) => {
-      const updates = this.subs.get(key) || [];
-      updates.forEach((update: any) => {
-        if (!update._NOSTORE_UNMOUNT_) update({});
-      });
+      const updates = this.subs.get(key);
+      updates.forEach((update: any) => update({}));
       this.clearSub(key);
     });
   }
 
   addSub(key: string): void {
-    if (!this.target) return;
     const updates = this.subs.get(key) || [];
-    if (updates.indexOf(this.target) === -1) {
+    if (updates.indexOf(this.target) === -1 && this.target) {
       updates.push(this.target);
     }
     this.subs.set(key, updates);

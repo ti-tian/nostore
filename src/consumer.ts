@@ -1,17 +1,11 @@
-import { useState, useEffect } from 'react';
-import { StoreInterface } from './Store';
+import { useState } from "react";
+import { StoreInterface } from "./Store";
 
 export function useStore<S>(
-  store: StoreInterface<S>,
-): [S, StoreInterface<S>['setStore']] {
-  const [, updater] = useState();
+  store: StoreInterface<S>
+): [S, StoreInterface<S>["setStore"]] {
+  const [, forceUpdate] = useState();
   const { dep, setStore, getStore } = store;
-  useEffect(() => {
-    dep.targetMount(updater);
-    return () => {
-      dep.targetUnmount(updater);
-    };
-  }, [dep]);
-  dep.setTarget(updater);
+  dep.setTarget(forceUpdate);
   return [getStore(), setStore];
 }
