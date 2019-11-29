@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { StoreInterface } from "./Store";
+import { IStore } from "./Store";
 
-export function useStore<S>(
-  store: StoreInterface<S>
-): [S, StoreInterface<S>["setStore"]] {
+export function useStore<S>(store: IStore<S>): [S, IStore<S>["setStore"]] {
   const [, forceUpdate] = useState();
   const { dep, setStore, getStore } = store;
   dep.setTarget(forceUpdate);

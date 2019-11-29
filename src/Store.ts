@@ -1,9 +1,15 @@
-import { isFunction, isPlainObject } from "./utils";
+import ReactDOM from "react-dom";
+import {
+  merge,
+  invariant,
+  nextTick,
+  isFunction,
+  getDiffProps,
+  isPlainObject
+} from "./utils";
 import Dep from "./dep";
-import { invariant, merge, getDiffProps, nextTick } from "./utils";
-import { unstable_batchedUpdates } from "react-dom";
 
-export interface StoreInterface<S> {
+export interface IStore<S> {
   store: S;
   initialStore: any;
   dep: Dep;
@@ -12,7 +18,7 @@ export interface StoreInterface<S> {
   reactive(): void;
 }
 
-export default class Store<S> implements StoreInterface<S> {
+export default class Store<S> implements IStore<S> {
   initialStore: any;
   store: S;
   dep: Dep;
@@ -31,7 +37,7 @@ export default class Store<S> implements StoreInterface<S> {
     return this.store;
   }
 
-  reactive(): void {
+  reactive() {
     const handler = {
       get: (target: any, key: string, receiver: any) => {
         this.dep.addSub(key);
@@ -44,7 +50,7 @@ export default class Store<S> implements StoreInterface<S> {
 
         nextTick(() => {
           this.writable = false;
-          unstable_batchedUpdates(() => {
+          ReactDOM.unstable_batchedUpdates(() => {
             this.dep.notify();
             this.dep.clearBuffer();
           });
@@ -55,7 +61,7 @@ export default class Store<S> implements StoreInterface<S> {
     this.store = new Proxy(this.store, handler);
   }
 
-  setStore(partialStore: ((prevStore: S) => Partial<S>) | Partial<S>): void {
+  setStore(partialStore: ((prevStore: S) => Partial<S>) | Partial<S>) {
     invariant(
       isPlainObject(partialStore) || isFunction(partialStore),
       "setStore(...): takes an object of store variables to update or a " +
@@ -64,12 +70,9 @@ export default class Store<S> implements StoreInterface<S> {
 
     this.writable = true;
 
-    let newStore: S | object;
-    if (isFunction(partialStore)) {
-      newStore = (partialStore as Function)(this.store);
-    } else {
-      newStore = partialStore;
-    }
+    const newStore = isFunction(partialStore)
+      ? (partialStore as Function)(this.store)
+      : partialStore;
 
     // cannot add new property
     const diffProps = getDiffProps(this.store, newStore);
