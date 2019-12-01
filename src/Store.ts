@@ -13,6 +13,7 @@ export interface IStore<S> {
   store: S;
   initialStore: any;
   dep: Dep;
+  writable: boolean;
   setStore(partialStore: ((prevStore: S) => Partial<S>) | Partial<S>): void;
   getStore(): S;
   reactive(): void;
