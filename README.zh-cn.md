@@ -37,53 +37,62 @@ $ npm install nostore --save
 
 ### 新建一个 store
 
-```javascript
 // store.js
 
-import { createStore } from 'nostore';
+import { createStore } from "nostore";
 
 const useStore = createStore({ count: 1 });
 
 export default useStore;
 
+// action 
 export function useDecrease() {
   const [, setStore] = useStore();
   return () => {
     setStore(prevStore => ({
-      count: prevStore.count - 1,
+      count: prevStore.count - 1
     }));
   };
 }
-```
+
+// multiple actions
+export function useAction() {
+  const [store, setStore] = useStore();
+  return {
+    decrease() {
+      setStore({
+        count: store.count - 1
+      });
+    },
+    // async action
+    async increase() {
+      await wait(2000);
+      setStore(prevStore => ({
+        count: prevStore.count + 1
+      }));
+    }
+  };
+}	
 
 ### 使用 store
 
-```javascript
 // Increase.jsx
 
-import useStore from './store.js';
+import useStore, { useAction } from "./store.js";
 
 function Increase() {
-  const [store, setStore] = useStore();
+  const [store] = useStore();
+  const { increase } = useAction();
   return (
     <>
       <h1>{store.count}</h1>
-      <button
-        onClick={() => {
-          setStore({
-            count: store.count + 1,
-          });
-        }}
-      />
+      <button onClick={increase}>increase</button>
     </>
   );
 }
-```
-
-```javascript
 // Decrease.jsx
 
-import useStore, { useDecrease } from './store.js';
+import useStore, { useDecrease } from "./store.js";
 
 function Decrease() {
   const [store] = useStore();
