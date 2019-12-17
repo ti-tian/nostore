@@ -56,13 +56,12 @@ export function useDecrease() {
 
 // multiple actions
 export function useAction() {
-  const [, setStore] = useStore();
+  const [store, setStore] = useStore();
   return {
     decrease() {
-      setStore(prevStore => ({
-        count: prevStore.count - 1,
-        data: prevStore.data.concat([1])
-      }));
+      setStore({
+        count: store.count - 1
+      });
     },
     // async action
     async increase() {
