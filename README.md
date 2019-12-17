@@ -26,10 +26,11 @@ $ yarn add nostore
 # or
 $ npm install nostore --save
 ```
+> It can be used as `useState` in the global context. Indeed affect the whole body!
 
 ## Try It Online
 
-[![Edit react](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/trusting-saha-g6uuy?fontsize=14)
+[![Edit react](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/clever-ardinghelli-9r77d)
 
 ## use
 

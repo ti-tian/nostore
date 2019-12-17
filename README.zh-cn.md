@@ -19,7 +19,7 @@
 - React hooks 风格
 - 最小粒度更新组件
 
-> 你可以当成全局状态下的 useState
+> 可以当成全局的 `useState` 来使用，牵一发而动全身！
 
 ## 安装
 
@@ -31,12 +31,13 @@ $ npm install nostore --save
 
 ## 在线尝试
 
-[![Edit react](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/trusting-saha-g6uuy?fontsize=14)
+[![Edit react](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/clever-ardinghelli-9r77d)
 
 ## 使用方式
 
-### 新建一个 store
+### 新建 store
 
+```javascript
 // store.js
 
 import { createStore } from "nostore";
@@ -73,9 +74,11 @@ export function useAction() {
     }
   };
 }	
+```
 
 ### 使用 store
 
+```javascript
 // Increase.jsx
 
 import useStore, { useAction } from "./store.js";
@@ -90,6 +93,9 @@ function Increase() {
     </>
   );
 }
+```
+
+```javascript
 // Decrease.jsx
 
 import useStore, { useDecrease } from "./store.js";
