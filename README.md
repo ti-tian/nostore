@@ -19,6 +19,8 @@
 - React hooks style
 - Minimum granularity update component
 
+> It can be used as `useState` in the global context. Indeed affect the whole body!
+
 ## Install
 
 ```bash
@@ -26,7 +28,6 @@ $ yarn add nostore
 # or
 $ npm install nostore --save
 ```
-> It can be used as `useState` in the global context. Indeed affect the whole body!
 
 ## Try It Online
 
