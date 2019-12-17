@@ -44,6 +44,7 @@ const useStore = createStore({ count: 1 });
 
 export default useStore;
 
+// action 
 export function useDecrease() {
   const [, setStore] = useStore();
   return () => {
@@ -52,6 +53,26 @@ export function useDecrease() {
     }));
   };
 }
+
+// multiple actions
+export function useAction() {
+  const [, setStore] = useStore();
+  return {
+    decrease() {
+      setStore(prevStore => ({
+        count: prevStore.count - 1,
+        data: prevStore.data.concat([1])
+      }));
+    },
+    // async action
+    async increase() {
+      await wait(2000);
+      setStore(prevStore => ({
+        count: prevStore.count + 1
+      }));
+    }
+  };
+}	
 ```
 
 ### use store
@@ -59,18 +80,15 @@ export function useDecrease() {
 ```javascript
 // Increase.jsx
 
-import useStore from "./store.js";
+import useStore, { useAction } from "./store.js";
 
 function Increase() {
-  const [store, setStore] = useStore();
+  const [store] = useStore();
+  const { increase } = useAction();
   return (
     <>
       <h1>{store.count}</h1>
-      <button
-        onClick={() => {
-          setStore({ count: store.count + 1 });
-        }}
-      />
+      <button onClick={increase}>increase</button>
     </>
   );
 }
