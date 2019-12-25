@@ -1,4 +1,5 @@
 import ReactDOM from "react-dom";
+import Dep from "./dep";
 import {
   merge,
   invariant,
@@ -7,14 +8,13 @@ import {
   getDiffProps,
   isPlainObject
 } from "./utils";
-import Dep from "./dep";
 
 export interface IStore<S> {
   store: S;
   initialStore: any;
   dep: Dep;
   writable: boolean;
-  setStore(partialStore: ((prevStore: S) => Partial<S>) | Partial<S>): void;
+  setStore(partial: ((prevStore: S) => Partial<S>) | Partial<S>): void;
   getStore(): S;
   reactive(): void;
 }
@@ -62,27 +62,27 @@ export default class Store<S> implements IStore<S> {
     this.store = new Proxy(this.store, handler);
   }
 
-  setStore(partialStore: ((prevStore: S) => Partial<S>) | Partial<S>) {
+  setStore(partial: ((prevStore: S) => Partial<S>) | Partial<S>) {
     invariant(
-      isPlainObject(partialStore) || isFunction(partialStore),
+      isPlainObject(partial) || isFunction(partial),
       "setStore(...): takes an object of store variables to update or a " +
         "function which returns an object of store variables."
     );
 
     this.writable = true;
 
-    const newStore = isFunction(partialStore)
-      ? (partialStore as Function)(this.store)
-      : partialStore;
+    const partialStore = isFunction(partial)
+      ? (partial as Function)(this.store)
+      : partial;
 
-    // cannot add new property
-    const diffProps = getDiffProps(this.store, newStore);
+    // cannot add new props
+    const diffProps = getDiffProps(this.store, partialStore);
 
     invariant(
       diffProps.length === 0,
       `cannot add new props: ${diffProps.join(", ")}`
     );
 
-    merge(this.store, newStore);
+    merge(this.store, partialStore);
   }
 }
