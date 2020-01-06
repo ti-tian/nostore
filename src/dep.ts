@@ -36,8 +36,10 @@ export default class Dep {
   notify() {
     this.buffer.forEach((key: string) => {
       const updates = this.subs.get(key);
-      updates.forEach((update: any) => update({}));
-      this.clearSub(key);
+      if (Array.isArray(updates)) {
+        updates.forEach((update: any) => update());
+        this.clearSub(key);
+      }
     });
   }
 
