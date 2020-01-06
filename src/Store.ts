@@ -9,12 +9,14 @@ import {
   isPlainObject
 } from "./utils";
 
+type PartialStore<S> = ((prevStore: S) => Partial<S>) | Partial<S>;
+
 export interface IStore<S> {
   store: S;
   initialStore: any;
   dep: Dep;
   writable: boolean;
-  setStore(partial: ((prevStore: S) => Partial<S>) | Partial<S>): void;
+  setStore(partial: PartialStore<S>): void;
   getStore(): S;
   reactive(): void;
 }
@@ -62,7 +64,7 @@ export default class Store<S> implements IStore<S> {
     this.store = new Proxy(this.store, handler);
   }
 
-  setStore(partial: ((prevStore: S) => Partial<S>) | Partial<S>) {
+  setStore(partial: PartialStore<S>) {
     invariant(
       isPlainObject(partial) || isFunction(partial),
       "setStore(...): takes an object of store variables to update or a " +
