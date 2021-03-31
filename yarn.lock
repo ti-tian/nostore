@@ -728,13 +728,6 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@babel/runtime@^7.7.2":
-  version "7.7.2"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.7.2.tgz#111a78002a5c25fc8e3361bedc9529c696b85a6a"
-  integrity sha512-JONRbXbTXc9WQE2mAZd1p0Z3DZ/6vaQIkgYMSTP3KjRCyd7rCZCcfhCyX+YjwcKxcZ82UrxbRD358bpExNgrjw==
-  dependencies:
-    regenerator-runtime "^0.13.2"
-
 "@babel/template@^7.4.0", "@babel/template@^7.7.0":
   version "7.7.0"
   resolved "http://npm-registry.qunhequnhe.com/@babel/template/download/@babel/template-7.7.0.tgz#4fadc1b8e734d97f56de39c77de76f2562e597d0"
@@ -5889,9 +5882,9 @@ xml-name-validator@^3.0.0:
   integrity sha1-auc+Bt5NjG5H+fsYH3jWSK1FfGo=
 
 y18n@^4.0.0:
-  version "4.0.0"
-  resolved "http://npm-registry.qunhequnhe.com/y18n/download/y18n-4.0.0.tgz#95ef94f85ecc81d007c264e190a120f0a3c8566b"
-  integrity sha1-le+U+F7MgdAHwmThkKEg8KPIVms=
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/y18n/-/y18n-4.0.1.tgz#8db2b83c31c5d75099bb890b23f3094891e247d4"
+  integrity sha512-wNcy4NvjMYL8gogWWYAO7ZFWFfHcbdbE57tZO8e4cbpj8tfUcwrwqSl3ad8HxpYWCdXcJUCeKKZS62Av1affwQ==
 
 yallist@^2.1.2:
   version "2.1.2"
